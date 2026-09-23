@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base Color: Charcoal Slate / Elegant Dark Gray -->
+    <color name="primary_gray">#2D3748</color>
+    <color name="primary_gray_dark">#1A202C</color>
+    <color name="primary_gray_surface">#3F4D67</color>
+    
+    <!-- Secondary Color: Vibrant & Warm Orange -->
+    <color name="secondary_orange">#EA580C</color>
+    <color name="secondary_orange_light">#F97316</color>
+    <color name="secondary_orange_dark">#C2410C</color>
+    <color name="orange_soft_bg">#FFF7ED</color>
+    <color name="orange_soft_stroke">#FFEDD5</color>
+
+    <!-- Aliases for backwards compatibility -->
+    <color name="primary_navy">#2D3748</color>
+    <color name="primary_navy_dark">#1A202C</color>
+    <color name="primary_navy_surface">#3F4D67</color>
+    <color name="primary_blue">#2D3748</color>
+    <color name="accent_blue">#EA580C</color>
+    <color name="primary_gold">#EA580C</color>
+    <color name="accent_gold">#F97316</color>
+    <color name="gold_soft_bg">#FFF7ED</color>
+
+    <!-- Surfaces & Backgrounds -->
+    <color name="bg_slate">#F4F5F7</color>
+    <color name="surface_white">#FFFFFF</color>
+    
+    <!-- Text Colors -->
+    <color name="text_dark">#1A202C</color>
+    <color name="text_muted">#718096</color>
+    <color name="text_subtle">#A0AEC0</color>
+    <color name="border_light">#E2E8F0</color>
+    <color name="card_stroke">#E2E8F0</color>
+    
+    <!-- Status Colors -->
+    <color name="green_success">#059669</color>
+    <color name="green_success_bg">#ECFDF5</color>
+    <color name="green_success_stroke">#A7F3D0</color>
+
+    <!-- Streak Dynamic Colors -->
+    <!-- 1 - 29: Oranye -->
+    <color name="streak_orange">#EA580C</color>
+    <color name="streak_orange_bg">#FFF7ED</color>
+    <color name="streak_bg_light">#FFF7ED</color>
+
+    <!-- 30 - 99: Merah Berapi -->
+    <color name="streak_red">#DC2626</color>
+    <color name="streak_red_bg">#FEF2F2</color>
+
+    <!-- 100 - 199: Ungu Muda -->
+    <color name="streak_purple_light">#9333EA</color>
+    <color name="streak_purple_light_bg">#FAF5FF</color>
+
+    <!-- 200 - 299: Ungu Royal -->
+    <color name="streak_purple_dark">#6B21A8</color>
+    <color name="streak_purple_dark_bg">#F3E8FF</color>
+
+    <!-- 300+: Oranye Emas Premium -->
+    <color name="streak_blue">#D97706</color>
+    <color name="streak_blue_bg">#FEF3C7</color>
+
+    <!-- Default 0 streak -->
+    <color name="streak_gray">#A0AEC0</color>
+    <color name="streak_gray_bg">#EDF2F7</color>
+</resources>

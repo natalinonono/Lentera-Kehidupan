@@ -1,0 +1,14 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.SelesaikanAlkitabmu" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color (Base: Abu-abu). -->
+        <item name="colorPrimary">@color/primary_gray</item>
+        <item name="colorOnPrimary">@color/surface_white</item>
+        <!-- Secondary brand color (Secondary: Oranye). -->
+        <item name="colorSecondary">@color/secondary_orange</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">#1A202C</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowBackground">@color/bg_slate</item>
+    </style>
+</resources>

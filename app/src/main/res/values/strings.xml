@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Selesaikan Alkitabmu</string>
+    <string name="selamat_datang">Shalom!</string>
+    <string name="sub_selamat_datang">Lanjutkan perjalanan membaca Alkitabmu hari ini</string>
+    <string name="streak_label">HARI</string>
+    <string name="target_hari_ini">BACAAN HARI INI</string>
+    <string name="tandai_selesai">Selesaikan Bacaan Hari Ini</string>
+    <string name="sudah_selesai_hari_ini">Bacaan Hari Ini Selesai</string>
+    <string name="progres_keseluruhan">Progres Alkitab</string>
+    <string name="reset_data">Reset Data Pengujian</string>
+</resources>
