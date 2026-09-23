@@ -28,11 +28,37 @@
         android:textColor="@color/text_muted"
         android:textSize="14sp" />
 
+    <!-- Input Nama Pembaca -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilNamaPengguna"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Nama Anda (contoh: Josua)"
+        app:boxBackgroundColor="@color/surface_white"
+        app:boxCornerRadiusBottomEnd="0dp"
+        app:boxCornerRadiusBottomStart="0dp"
+        app:boxCornerRadiusTopEnd="0dp"
+        app:boxCornerRadiusTopStart="0dp"
+        app:boxStrokeColor="@color/primary_gray"
+        app:hintTextColor="@color/primary_gray">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etNamaPengguna"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:inputType="textCapWords"
+            android:maxLines="1"
+            android:textColor="@color/text_dark"
+            android:textSize="15sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <!-- Container Pilihan Card -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical">
 
         <!-- Card Pilihan Katolik -->

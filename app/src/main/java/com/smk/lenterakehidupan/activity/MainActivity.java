@@ -22,6 +22,8 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     // Komponen UI
+    private TextView tvGreeting;
+    private TextView btnEditNama;
     private TextView tvNamaKitab;
     private TextView tvPasal;
     private TextView tvStreak;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_STREAK = "streak";
     private static final String KEY_LAST_DATE = "lastDate";
     private static final String KEY_CANON = "canon"; // "katolik" atau "protestan"
+    private static final String KEY_USER_NAME = "user_name";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
 
         // 2. Hubungkan variabel dengan ID di layout activity_main.xml
+        tvGreeting = findViewById(R.id.tvGreeting);
+        btnEditNama = findViewById(R.id.btnEditNama);
         tvNamaKitab = findViewById(R.id.tvNamaKitab);
         tvPasal = findViewById(R.id.tvPasal);
         tvStreak = findViewById(R.id.tvStreak);
@@ -58,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
         btnGantiCanon = findViewById(R.id.btnGantiCanon);
         btnTandaiSelesai = findViewById(R.id.btnTandaiSelesai);
         btnReset = findViewById(R.id.btnReset);
+
+        // Tombol Ubah Nama Pengguna
+        btnEditNama.setOnClickListener(v -> tampilkanDialogUbahNama());
 
         // 3. Tombol ganti Kanon (membuka kembali SelectCanonActivity)
         btnGantiCanon.setOnClickListener(v -> {
@@ -94,6 +102,35 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void tampilkanDialogUbahNama() {
+        android.widget.EditText inputNama = new android.widget.EditText(this);
+        String currentName = sharedPreferences.getString(KEY_USER_NAME, "Josua");
+        inputNama.setText(currentName);
+        inputNama.setSingleLine(true);
+        inputNama.setSelection(inputNama.getText().length());
+
+        int paddingPx = (int) (16 * getResources().getDisplayMetrics().density);
+        android.widget.FrameLayout container = new android.widget.FrameLayout(this);
+        container.setPadding(paddingPx, paddingPx / 2, paddingPx, 0);
+        container.addView(inputNama);
+
+        new AlertDialog.Builder(this)
+                .setTitle("Ubah Nama Anda")
+                .setMessage("Masukkan nama atau panggilan Anda:")
+                .setView(container)
+                .setPositiveButton("Simpan", (dialog, which) -> {
+                    String namaBaru = inputNama.getText().toString().trim();
+                    if (namaBaru.isEmpty()) {
+                        namaBaru = "Pembaca";
+                    }
+                    sharedPreferences.edit().putString(KEY_USER_NAME, namaBaru).apply();
+                    Toast.makeText(this, "Nama berhasil diperbarui!", Toast.LENGTH_SHORT).show();
+                    loadData();
+                })
+                .setNegativeButton("Batal", null)
+                .show();
+    }
+
     private void loadData() {
         // Ambil versi yang aktif
         String canon = sharedPreferences.getString(KEY_CANON, KitabData.CANON_KATOLIK);
@@ -110,6 +147,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Ambil data lokal
+        String userName = sharedPreferences.getString(KEY_USER_NAME, "Josua");
+        if (userName.trim().isEmpty()) {
+            userName = "Pembaca";
+        }
+        tvGreeting.setText("Hai " + userName + "!");
+
         int pasal = sharedPreferences.getInt(KEY_PASAL, 1);
         int streak = sharedPreferences.getInt(KEY_STREAK, 0);
 

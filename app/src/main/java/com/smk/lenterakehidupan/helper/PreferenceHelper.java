@@ -25,6 +25,7 @@ public class PreferenceHelper {
     private static final String KEY_FIRST_TIME_SETUP = "key_first_time_setup";
     private static final String KEY_CANON_TYPE = "key_canon_type";
     private static final String KEY_HISTORY = "key_history";
+    private static final String KEY_USER_NAME = "key_user_name";
 
     private final SharedPreferences prefs;
     private final Gson gson;
@@ -32,6 +33,14 @@ public class PreferenceHelper {
     public PreferenceHelper(Context context) {
         this.prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         this.gson = new Gson();
+    }
+
+    public String getUserName() {
+        return prefs.getString(KEY_USER_NAME, "Josua");
+    }
+
+    public void setUserName(String name) {
+        prefs.edit().putString(KEY_USER_NAME, name).apply();
     }
 
     public boolean isFirstTimeSetup() {
