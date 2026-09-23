@@ -17,17 +17,9 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:contentDescription="Ikon Target"
-            android:src="@drawable/ic_book"
-            app:tint="@color/primary_navy" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:text="Atur Target Bacaan"
             android:textColor="@color/text_dark"
             android:textSize="18sp"
@@ -47,10 +39,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:text="Satuan Target"
+        android:layout_marginTop="16dp"
+        android:text="Pilih Satuan:"
         android:textColor="@color/text_dark"
-        android:textSize="13sp"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
     <RadioGroup
@@ -65,102 +57,50 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="Pasal per hari"
+            android:text="Pasal"
             android:textColor="@color/text_dark"
-            android:textSize="13sp" />
+            android:textSize="14sp" />
 
         <RadioButton
             android:id="@+id/rbAyat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="Ayat per hari"
+            android:layout_marginStart="24dp"
+            android:text="Ayat"
             android:textColor="@color/text_dark"
-            android:textSize="13sp" />
+            android:textSize="14sp" />
     </RadioGroup>
 
-    <!-- Pilihan Cepat Rekomendasi -->
+    <!-- Input Angka Target (EditText Sederhana) -->
     <TextView
-        android:id="@+id/tvPresetLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Rekomendasi Durasi"
+        android:text="Target per hari:"
         android:textColor="@color/text_dark"
-        android:textSize="13sp"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroupTarget"
+    <EditText
+        android:id="@+id/etTargetValue"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:singleSelection="true">
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip1"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1 Pasal (~3 tahun)"
-            android:textColor="@color/text_dark"
-            android:textSize="12sp"
-            app:chipCornerRadius="10dp" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip3"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="3 Pasal (~1 tahun)"
-            android:textColor="@color/text_dark"
-            android:textSize="12sp"
-            app:chipCornerRadius="10dp" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip5"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5 Pasal (~8 bulan)"
-            android:textColor="@color/text_dark"
-            android:textSize="12sp"
-            app:chipCornerRadius="10dp" />
-    </com.google.android.material.chip.ChipGroup>
-
-    <!-- Input Kustom -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilTargetValue"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="Jumlah Target Harian"
-        app:boxCornerRadiusBottomEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxStrokeColor="@color/accent_blue">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etTargetValue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:text="3"
-            android:textColor="@color/text_dark"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_height="48dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/bg_pill_subtle"
+        android:hint="Masukkan angka (contoh: 3)"
+        android:inputType="number"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:text="3"
+        android:textColor="@color/text_dark"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/tvTargetHint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:lineSpacingExtra="2dp"
-        android:text="*Dengan 3 pasal per hari, kamu akan menyelesaikan seluruh Alkitab dalam waktu sekitar 1 tahun."
+        android:layout_marginTop="10dp"
+        android:text="*Target membaca 3 pasal per hari."
         android:textColor="@color/accent_blue"
         android:textSize="12sp" />
 

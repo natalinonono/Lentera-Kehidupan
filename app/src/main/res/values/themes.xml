@@ -10,5 +10,14 @@
         <item name="android:statusBarColor">#1A202C</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowBackground">@color/bg_slate</item>
+        
+        <!-- Flat & Kaku (Tanpa Sudut Melengkung) -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Flat</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Flat</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Flat</item>
+    </style>
+
+    <style name="ShapeAppearance.Flat" parent="">
+        <item name="cornerSize">0dp</item>
     </style>
 </resources>
