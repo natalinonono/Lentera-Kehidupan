@@ -109,35 +109,41 @@
             android:textColor="@color/text_dark"
             android:textSize="14sp" />
 
-        <!-- Pilihan Versi Alkitab (Kristen Protestan / Katolik) Flat -->
-        <RadioGroup
-            android:id="@+id/rgCanon"
-            android:layout_width="match_parent"
+        <!-- Info Versi Kanon Terpilih & Tombol Ganti -->
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/rbKatolik"
+            <TextView
+                android:id="@+id/tvCanonBadge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
+                android:background="@color/bg_slate"
                 android:fontFamily="sans-serif-condensed"
-                android:text="Katolik (73 Kitab)"
-                android:textColor="@color/text_dark"
-                android:textSize="13sp" />
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="5dp"
+                android:text="Kanon: Katolik (73 Kitab)"
+                android:textColor="@color/primary_gray"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
-            <RadioButton
-                android:id="@+id/rbProtestan"
+            <TextView
+                android:id="@+id/btnGantiCanon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:fontFamily="sans-serif-condensed"
-                android:text="Protestan (66 Kitab)"
-                android:textColor="@color/text_dark"
-                android:textSize="13sp" />
-        </RadioGroup>
+                android:padding="6dp"
+                android:text="[Ganti]"
+                android:textColor="@color/primary_red"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <!-- Tombol Aksi (Flat Kaku Tanpa Rounded) -->
         <com.google.android.material.button.MaterialButton
