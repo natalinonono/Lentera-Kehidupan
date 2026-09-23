@@ -60,34 +60,50 @@ public class SelectCanonActivity extends AppCompatActivity {
 
         btnMulaiMembaca.setOnClickListener(v -> {
             String previousCanon = prefs.getString(KEY_CANON, "");
-
-            // Cek apakah ada perubahan versi Alkitab (misal Katolik ke Protestan atau sebaliknya)
             boolean canonChanged = !previousCanon.isEmpty() && !previousCanon.equalsIgnoreCase(selectedCanon);
 
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString(KEY_CANON, selectedCanon);
-            editor.putBoolean(KEY_FIRST_TIME, true);
-
-            // Jika versi Alkitab diganti, langsung otomatis reset progres & streak
             if (canonChanged) {
-                editor.putInt("pasal", 1);
-                editor.putInt("streak", 0);
-                editor.putString("lastDate", "");
-            }
-            editor.apply();
+                String namaVersiBaru = KitabData.CANON_PROTESTAN.equalsIgnoreCase(selectedCanon)
+                        ? "Alkitab Protestan (66 Kitab)"
+                        : "Alkitab Katolik (73 Kitab)";
 
-            String label = KitabData.CANON_PROTESTAN.equalsIgnoreCase(selectedCanon)
-                    ? "Alkitab Protestan (66 Kitab)"
-                    : "Alkitab Katolik (73 Kitab)";
-
-            if (canonChanged) {
-                Toast.makeText(this, "Beralih ke " + label + " - Progres otomatis direset ke awal!", Toast.LENGTH_LONG).show();
+                new androidx.appcompat.app.AlertDialog.Builder(this)
+                        .setTitle("Konfirmasi Ganti Versi")
+                        .setMessage("Apakah Anda yakin ingin mengganti ke " + namaVersiBaru + "?\n\nPerhatian: Mengganti versi Alkitab akan mengulang progres membaca Anda dari awal (Pasal 1 & Streak 0).")
+                        .setPositiveButton("Ya, Ganti & Reset", (dialog, which) -> {
+                            simpanDanLanjutkan(prefs, true);
+                        })
+                        .setNegativeButton("Batal", null)
+                        .show();
             } else {
-                Toast.makeText(this, "Memilih: " + label, Toast.LENGTH_SHORT).show();
+                simpanDanLanjutkan(prefs, false);
             }
-
-            bukaMainActivity();
         });
+    }
+
+    private void simpanDanLanjutkan(SharedPreferences prefs, boolean isReset) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(KEY_CANON, selectedCanon);
+        editor.putBoolean(KEY_FIRST_TIME, true);
+
+        if (isReset) {
+            editor.putInt("pasal", 1);
+            editor.putInt("streak", 0);
+            editor.putString("lastDate", "");
+        }
+        editor.apply();
+
+        String label = KitabData.CANON_PROTESTAN.equalsIgnoreCase(selectedCanon)
+                ? "Alkitab Protestan (66 Kitab)"
+                : "Alkitab Katolik (73 Kitab)";
+
+        if (isReset) {
+            Toast.makeText(this, "Beralih ke " + label + " - Progres diulang dari awal.", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Versi aktif: " + label, Toast.LENGTH_SHORT).show();
+        }
+
+        bukaMainActivity();
     }
 
     private void updateCardSelection() {
