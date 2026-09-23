@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.SelesaikanAlkitabmu" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.LenteraKehidupan" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color (Base: Abu-abu). -->
         <item name="colorPrimary">@color/primary_gray</item>
         <item name="colorOnPrimary">@color/surface_white</item>

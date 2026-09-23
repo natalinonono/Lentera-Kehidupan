@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Selesaikan Alkitabmu"
+rootProject.name = "Lentera Kehidupan"
 include ':app'
