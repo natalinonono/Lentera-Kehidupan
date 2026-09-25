@@ -6,81 +6,137 @@
     android:background="@color/bg_slate"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:padding="20dp">
 
-    <!-- Judul Aplikasi -->
-    <TextView
-        android:id="@+id/tvAppTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-condensed"
-        android:text="LENTERA KEHIDUPAN"
-        android:textColor="@color/primary_gray"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <!-- Baris Sapaan / Greeting Nama Pengguna -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tvGreeting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:text="Hai Pembaca!"
-            android:textColor="@color/primary_red"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/btnEditNama"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:fontFamily="sans-serif"
-            android:padding="4dp"
-            android:text="[Ubah Nama]"
-            android:textColor="@color/text_muted"
-            android:textSize="12sp" />
-    </LinearLayout>
-
-    <!-- Card / Kotak Konten Utama (Flat Tanpa Lengkungan) -->
+    <!-- Header Atas: Judul Aplikasi & Tombol Manajemen User -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvAppTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:text="LENTERA KEHIDUPAN"
+                android:textColor="@color/primary_gray"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <!-- Baris Sapaan Nama Pengguna & Badge Julukan Rohani -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvGreeting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Hai Josua!"
+                    android:textColor="@color/primary_red"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvBadgeJulukan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@color/border_light"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="sans-serif-condensed"
+                    android:paddingStart="8dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="2dp"
+                    android:text="Pencari Sabda"
+                    android:textColor="@color/primary_gray"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Tombol Menu Pengguna (Pindah/Kelola Pengguna) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnKelolaUser"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Akun"
+            android:textColor="@color/primary_gray"
+            android:textSize="12sp"
+            app:cornerRadius="0dp"
+            app:strokeColor="@color/primary_gray"
+            app:strokeWidth="1dp" />
+
+    </LinearLayout>
+
+    <!-- Card / Kotak Konten Utama (Flat Kaku) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:background="@color/surface_white"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="20dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:text="BACAAN HARI INI"
-            android:textColor="@color/text_muted"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <!-- Nama Kitab & Pasalnya (Contoh: Kejadian 1) -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif"
+                android:text="BACAAN HARI INI"
+                android:textColor="@color/text_muted"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvTargetBabHarian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_slate"
+                android:paddingStart="8dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="3dp"
+                android:text="Target: 1 Bab/Hari"
+                android:textColor="@color/primary_gray"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Nama Kitab & Pasalnya (Contoh: Kejadian 1 atau Kejadian 1 s/d 3) -->
         <TextView
             android:id="@+id/tvNamaKitab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
             android:text="Kejadian 1"
             android:textColor="@color/text_dark"
-            android:textSize="32sp"
+            android:textSize="28sp"
             android:textStyle="bold" />
 
         <!-- Keterangan Urutan Pasal Global -->
@@ -88,47 +144,88 @@
             android:id="@+id/tvPasal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="2dp"
             android:fontFamily="sans-serif"
             android:text="(Pasal ke-1 dari 1334)"
             android:textColor="@color/text_muted"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
 
-        <!-- Streak Bacaan (Tanpa Ikon Api) -->
-        <TextView
-            android:id="@+id/tvStreak"
-            android:layout_width="wrap_content"
+        <!-- Status Streak & Lose Streak Banner -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="sans-serif-condensed"
-            android:text="Streak: 0 Hari"
-            android:textColor="@color/primary_red"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvStreak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Streak: 0 Hari"
+                android:textColor="@color/primary_red"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvLoseStreakBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="@color/streak_red_bg"
+                android:fontFamily="sans-serif-condensed"
+                android:paddingStart="8dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="3dp"
+                android:text="Lose Streak: 0x"
+                android:textColor="@color/primary_red"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:background="@color/border_light" />
 
-        <!-- Progress Bar & Jumlah Pasal -->
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- Progress Bar & Persentase Penyelesaian -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:text="PROGRESS MEMBACA"
-            android:textColor="@color/text_muted"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif"
+                android:text="PROGRESS ALKITAB"
+                android:textColor="@color/text_muted"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvPersentaseSelesai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:text="0.1%"
+                android:textColor="@color/primary_red"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="12dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="8dp"
             android:progress="1"
             android:progressTint="@color/primary_red" />
 
@@ -136,17 +233,17 @@
             android:id="@+id/tvProgressText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             android:fontFamily="sans-serif"
             android:text="1 / 1334 pasal"
             android:textColor="@color/text_dark"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
 
         <!-- Info Versi Kanon Terpilih & Tombol Ganti -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="14dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -178,32 +275,68 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- Tombol Aksi (Flat Kaku Tanpa Rounded) -->
+        <!-- Tombol Aksi Selesai Hari Ini -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnTandaiSelesai"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="50dp"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/primary_gray"
             android:fontFamily="sans-serif-condensed"
             android:text="TANDAI SELESAI HARI INI"
             android:textColor="@color/surface_white"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textStyle="bold"
             app:cornerRadius="0dp"
             app:elevation="0dp" />
 
-        <!-- Tombol Reset Project Flat -->
+        <!-- Tombol Riwayat & Statistik -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLihatRiwayat"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Riwayat &amp; Statistik"
+                android:textColor="@color/primary_gray"
+                android:textSize="12sp"
+                app:cornerRadius="0dp"
+                app:strokeColor="@color/border_light" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPenghargaan"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Gelar Rohani"
+                android:textColor="@color/primary_gray"
+                android:textSize="12sp"
+                app:cornerRadius="0dp"
+                app:strokeColor="@color/border_light" />
+        </LinearLayout>
+
+        <!-- Tombol Reset Progres Flat -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnReset"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="4dp"
             android:fontFamily="sans-serif-condensed"
-            android:text="RESET PROGRES"
+            android:text="RESET PROGRES USER INI"
             android:textColor="@color/text_muted"
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:textStyle="bold"
             app:cornerRadius="0dp" />
 

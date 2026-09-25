@@ -108,6 +108,23 @@ public class SelectCanonActivity extends AppCompatActivity {
         }
         editor.apply();
 
+        // Sinkronisasi ke model UserProfile aktif di PreferenceHelper
+        com.smk.lenterakehidupan.helper.PreferenceHelper helper = new com.smk.lenterakehidupan.helper.PreferenceHelper(this);
+        com.smk.lenterakehidupan.model.UserProfile user = helper.getActiveUser();
+        if (user != null) {
+            user.setCanon(selectedCanon);
+            if (isReset) {
+                user.setCurrentPasal(1);
+                user.setStreak(0);
+                user.setLastReadDate("");
+                user.getHistoryList().clear();
+            }
+            if (namaPengguna != null && !namaPengguna.isEmpty() && !"Pembaca".equals(namaPengguna)) {
+                user.setUsername(namaPengguna);
+            }
+            helper.updateActiveUser(user);
+        }
+
         String label = KitabData.CANON_PROTESTAN.equalsIgnoreCase(selectedCanon)
                 ? "Alkitab Protestan (66 Kitab)"
                 : "Alkitab Katolik (73 Kitab)";

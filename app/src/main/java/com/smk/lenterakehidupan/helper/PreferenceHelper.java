@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.smk.lenterakehidupan.model.KitabData;
+import com.smk.lenterakehidupan.model.ReadingHistory;
+import com.smk.lenterakehidupan.model.UserProfile;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
@@ -12,20 +15,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 public class PreferenceHelper {
-    private static final String PREF_NAME = "selesaikan_alkitabmu_pref";
-    private static final String KEY_STREAK = "key_streak";
-    private static final String KEY_LAST_READ_DATE = "key_last_read_date";
-    private static final String KEY_CURRENT_PASAL_INDEX = "key_current_pasal_index"; // mulai dari 1
-    private static final String KEY_CURRENT_AYAT_IN_PASAL = "key_current_ayat_in_pasal"; // ayat berikutnya yang harus dibaca, mulai dari 1
-    private static final String KEY_TOTAL_AYAT_READ = "key_total_ayat_read"; // akumulasi total ayat yang sudah dibaca
-    private static final String KEY_DAILY_TARGET_COUNT = "key_daily_target_count"; // default misal 3 pasal atau 15 ayat
-    private static final String KEY_TARGET_UNIT = "key_target_unit"; // "pasal" atau "ayat"
-    private static final String KEY_FIRST_TIME_SETUP = "key_first_time_setup";
-    private static final String KEY_CANON_TYPE = "key_canon_type";
-    private static final String KEY_HISTORY = "key_history";
-    private static final String KEY_USER_NAME = "key_user_name";
+    private static final String PREF_NAME = "AlkitabPref";
+    private static final String KEY_USER_LIST = "key_user_profiles_v2";
+    private static final String KEY_ACTIVE_USER_ID = "key_active_user_id";
+
+    // Legacy keys for backward compatibility
+    private static final String LEGACY_KEY_PASAL = "pasal";
+    private static final String LEGACY_KEY_STREAK = "streak";
+    private static final String LEGACY_KEY_LAST_DATE = "lastDate";
+    private static final String LEGACY_KEY_CANON = "canon";
+    private static final String LEGACY_KEY_USER_NAME = "user_name";
 
     private final SharedPreferences prefs;
     private final Gson gson;
@@ -35,149 +37,188 @@ public class PreferenceHelper {
         this.gson = new Gson();
     }
 
-    public String getUserName() {
-        return prefs.getString(KEY_USER_NAME, "Josua");
-    }
-
-    public void setUserName(String name) {
-        prefs.edit().putString(KEY_USER_NAME, name).apply();
-    }
-
-    public boolean isFirstTimeSetup() {
-        return prefs.getBoolean(KEY_FIRST_TIME_SETUP, true);
-    }
-
-    public void setFirstTimeSetupDone() {
-        prefs.edit().putBoolean(KEY_FIRST_TIME_SETUP, false).apply();
-    }
-
-    public String getTargetUnit() {
-        return prefs.getString(KEY_TARGET_UNIT, "pasal");
-    }
-
-    public void setTargetUnit(String unit) {
-        prefs.edit().putString(KEY_TARGET_UNIT, unit).apply();
-    }
-
-    public String getCanonType() {
-        return prefs.getString(KEY_CANON_TYPE, "katolik");
-    }
-
-    public void setCanonType(String type) {
-        prefs.edit().putString(KEY_CANON_TYPE, type).apply();
-    }
-
-    public int getStreak() {
-        return prefs.getInt(KEY_STREAK, 0);
-    }
-
-    public void setStreak(int streak) {
-        prefs.edit().putInt(KEY_STREAK, streak).apply();
-    }
-
-    public String getLastReadDate() {
-        return prefs.getString(KEY_LAST_READ_DATE, "");
-    }
-
-    public void setLastReadDate(String dateStr) {
-        prefs.edit().putString(KEY_LAST_READ_DATE, dateStr).apply();
-    }
-
-    public int getCurrentPasalIndex() {
-        return prefs.getInt(KEY_CURRENT_PASAL_INDEX, 1);
-    }
-
-    public void setCurrentPasalIndex(int index) {
-        prefs.edit().putInt(KEY_CURRENT_PASAL_INDEX, index).apply();
-    }
-
-    public int getCurrentAyatInPasal() {
-        return prefs.getInt(KEY_CURRENT_AYAT_IN_PASAL, 1);
-    }
-
-    public void setCurrentAyatInPasal(int ayat) {
-        prefs.edit().putInt(KEY_CURRENT_AYAT_IN_PASAL, ayat).apply();
-    }
-
-    public int getTotalAyatRead() {
-        return prefs.getInt(KEY_TOTAL_AYAT_READ, 0);
-    }
-
-    public void setTotalAyatRead(int total) {
-        prefs.edit().putInt(KEY_TOTAL_AYAT_READ, total).apply();
-    }
-
-    public int getDailyTargetCount() {
-        return prefs.getInt(KEY_DAILY_TARGET_COUNT, 3);
-    }
-
-    public void setDailyTargetCount(int count) {
-        prefs.edit().putInt(KEY_DAILY_TARGET_COUNT, count).apply();
-    }
-
-    public boolean isReadToday() {
-        String today = getTodayDate();
-        return today.equals(getLastReadDate());
-    }
-
-    public String getTodayDate() {
+    public static String getTodayDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return sdf.format(new Date());
     }
 
-    public String getYesterdayDate() {
+    public static String getYesterdayDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         long oneDayMillis = 24 * 60 * 60 * 1000L;
         return sdf.format(new Date(System.currentTimeMillis() - oneDayMillis));
     }
 
-    /**
-     * Memperbarui streak dan riwayat
-     */
-    public void recordCompletion(String rangeBacaan) {
-        String today = getTodayDate();
-        String yesterday = getYesterdayDate();
-        String lastDate = getLastReadDate();
+    // ==================== CRUD USER ====================
 
-        int currentStreak = getStreak();
-
-        if (today.equals(lastDate)) {
-            return;
-        }
-
-        if (yesterday.equals(lastDate)) {
-            currentStreak += 1;
-        } else {
-            currentStreak = 1;
-        }
-
-        setStreak(currentStreak);
-        setLastReadDate(today);
-
-        // Tambah riwayat
-        addHistory("Selesai: " + rangeBacaan + " (" + today + ")");
-    }
-
-    public void addHistory(String entry) {
-        List<String> list = getHistoryList();
-        list.add(0, entry);
-        if (list.size() > 50) {
-            list = list.subList(0, 50);
-        }
-        String json = gson.toJson(list);
-        prefs.edit().putString(KEY_HISTORY, json).apply();
-    }
-
-    public List<String> getHistoryList() {
-        String json = prefs.getString(KEY_HISTORY, null);
-        if (json == null) {
+    public List<UserProfile> getAllUsers() {
+        String json = prefs.getString(KEY_USER_LIST, null);
+        if (json == null || json.isEmpty()) {
             return new ArrayList<>();
         }
-        Type type = new TypeToken<List<String>>() {}.getType();
-        return gson.fromJson(json, type);
+        Type type = new TypeToken<List<UserProfile>>() {}.getType();
+        List<UserProfile> list = gson.fromJson(json, type);
+        return list != null ? list : new ArrayList<>();
     }
 
-    public void resetAll() {
-        prefs.edit().clear().apply();
+    public void saveAllUsers(List<UserProfile> users) {
+        String json = gson.toJson(users);
+        prefs.edit().putString(KEY_USER_LIST, json).apply();
+    }
+
+    public String getActiveUserId() {
+        return prefs.getString(KEY_ACTIVE_USER_ID, "");
+    }
+
+    public void setActiveUserId(String userId) {
+        prefs.edit().putString(KEY_ACTIVE_USER_ID, userId).apply();
+    }
+
+    public UserProfile getActiveUser() {
+        String activeId = getActiveUserId();
+        List<UserProfile> users = getAllUsers();
+        for (UserProfile u : users) {
+            if (u.getId().equals(activeId)) {
+                return u;
+            }
+        }
+        if (!users.isEmpty()) {
+            setActiveUserId(users.get(0).getId());
+            return users.get(0);
+        }
+        return null;
+    }
+
+    public void updateActiveUser(UserProfile updatedProfile) {
+        List<UserProfile> users = getAllUsers();
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getId().equals(updatedProfile.getId())) {
+                users.set(i, updatedProfile);
+                saveAllUsers(users);
+                return;
+            }
+        }
+    }
+
+    public void addUser(UserProfile newUser) {
+        if (newUser.getId() == null || newUser.getId().isEmpty()) {
+            newUser.setId(UUID.randomUUID().toString());
+        }
+        List<UserProfile> users = getAllUsers();
+        users.add(newUser);
+        saveAllUsers(users);
+    }
+
+    public boolean deleteUser(String userId) {
+        List<UserProfile> users = getAllUsers();
+        UserProfile toRemove = null;
+        for (UserProfile u : users) {
+            if (u.getId().equals(userId)) {
+                toRemove = u;
+                break;
+            }
+        }
+        if (toRemove != null) {
+            users.remove(toRemove);
+            saveAllUsers(users);
+            if (getActiveUserId().equals(userId)) {
+                if (!users.isEmpty()) {
+                    setActiveUserId(users.get(0).getId());
+                } else {
+                    setActiveUserId("");
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    // ==================== LOGIKA PERJALANAN & LOSE STREAK ====================
+
+    /**
+     * Memeriksa dan memperbarui status Lose Streak pada user saat aplikasi dimuat.
+     * Jika hari terakhir membaca adalah sebelum kemarin (dan tidak kosong), berarti streak putus.
+     */
+    public boolean checkAndApplyLoseStreak(UserProfile user) {
+        String lastDate = user.getLastReadDate();
+        if (lastDate == null || lastDate.isEmpty()) {
+            return false;
+        }
+        String today = getTodayDate();
+        String yesterday = getYesterdayDate();
+
+        // Jika bukan hari ini dan bukan kemarin, serta streak > 0, berarti terjadi lose streak!
+        if (!today.equals(lastDate) && !yesterday.equals(lastDate) && user.getStreak() > 0) {
+            user.incrementLoseStreak();
+            user.setStreak(0);
+            updateActiveUser(user);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Menyelesaikan bacaan hari ini untuk active user sesuai target bab hariannya.
+     * Mengembalikan informasi rentang bacaan yang telah diselesaikan.
+     */
+    public String selesaikanBacaanHariIni(UserProfile user) {
+        int totalPasal = KitabData.getTotalPasal(user.getCanon());
+        int targetBab = user.getTargetBabPerHari();
+        int startPasal = user.getCurrentPasal();
+
+        // Hitung rentang teks
+        String rentangTeks = KitabData.getRentangBacaan(startPasal, targetBab, user.getCanon());
+
+        // Hitung pasal akhir baru
+        int endPasal = Math.min(startPasal + targetBab, totalPasal + 1);
+        user.setCurrentPasal(Math.min(endPasal, totalPasal));
+
+        // Kalkulasi Streak & Lose Streak
+        String today = getTodayDate();
+        String yesterday = getYesterdayDate();
+        String lastDate = user.getLastReadDate();
+
+        boolean isLoseStreakRecovery = false;
+        if (yesterday.equals(lastDate)) {
+            user.setStreak(user.getStreak() + 1);
+        } else if (today.equals(lastDate)) {
+            // Sudah selesai hari ini
+            return rentangTeks;
+        } else {
+            // Jika sebelumnya bolong atau baru mulai
+            if (user.getStreak() == 0 && user.getLoseStreakCount() > 0) {
+                isLoseStreakRecovery = true;
+            }
+            user.setStreak(1);
+        }
+
+        user.setLastReadDate(today);
+
+        // Catat ke riwayat perjalanan
+        ReadingHistory history = new ReadingHistory(
+                today,
+                rentangTeks,
+                targetBab,
+                user.getPersentaseSelesai(),
+                user.getStreak(),
+                isLoseStreakRecovery
+        );
+        user.getHistoryList().add(0, history);
+
+        // Batasi 100 riwayat terakhir
+        if (user.getHistoryList().size() > 100) {
+            user.setHistoryList(new ArrayList<>(user.getHistoryList().subList(0, 100)));
+        }
+
+        updateActiveUser(user);
+        return rentangTeks;
+    }
+
+    public void resetProgress(UserProfile user) {
+        user.setCurrentPasal(1);
+        user.setStreak(0);
+        user.setLastReadDate("");
+        user.setHistoryList(new ArrayList<>());
+        user.setLoseStreakCount(0);
+        updateActiveUser(user);
     }
 }
