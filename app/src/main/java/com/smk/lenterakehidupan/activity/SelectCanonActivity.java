@@ -20,7 +20,6 @@ public class SelectCanonActivity extends AppCompatActivity {
     public static final String KEY_FIRST_TIME = "first_time_canon_selected";
     public static final String KEY_USER_NAME = "user_name";
 
-    private com.google.android.material.textfield.TextInputEditText etNamaPengguna;
     private MaterialCardView cardKatolik;
     private MaterialCardView cardProtestan;
     private MaterialButton btnMulaiMembaca;
@@ -42,16 +41,9 @@ public class SelectCanonActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_select_canon);
 
-        etNamaPengguna = findViewById(R.id.etNamaPengguna);
         cardKatolik = findViewById(R.id.cardKatolik);
         cardProtestan = findViewById(R.id.cardProtestan);
         btnMulaiMembaca = findViewById(R.id.btnMulaiMembaca);
-
-        // Baca preferensi tersimpan jika ada
-        String savedName = prefs.getString(KEY_USER_NAME, "");
-        if (!savedName.isEmpty()) {
-            etNamaPengguna.setText(savedName);
-        }
 
         selectedCanon = prefs.getString(KEY_CANON, KitabData.CANON_KATOLIK);
         updateCardSelection();
@@ -67,15 +59,9 @@ public class SelectCanonActivity extends AppCompatActivity {
         });
 
         btnMulaiMembaca.setOnClickListener(v -> {
-            String namaInput = etNamaPengguna.getText() != null ? etNamaPengguna.getText().toString().trim() : "";
-            if (namaInput.isEmpty()) {
-                namaInput = "Pembaca";
-            }
-
             String previousCanon = prefs.getString(KEY_CANON, "");
             boolean canonChanged = !previousCanon.isEmpty() && !previousCanon.equalsIgnoreCase(selectedCanon);
 
-            final String finalNama = namaInput;
             if (canonChanged) {
                 String namaVersiBaru = KitabData.CANON_PROTESTAN.equalsIgnoreCase(selectedCanon)
                         ? "Alkitab Protestan (66 Kitab)"
@@ -85,20 +71,19 @@ public class SelectCanonActivity extends AppCompatActivity {
                         .setTitle("Konfirmasi Ganti Versi")
                         .setMessage("Apakah Anda yakin ingin mengganti ke " + namaVersiBaru + "?\n\nPerhatian: Mengganti versi Alkitab akan mengulang progres membaca Anda dari awal (Pasal 1 & Streak 0).")
                         .setPositiveButton("Ya, Ganti & Reset", (dialog, which) -> {
-                            simpanDanLanjutkan(prefs, true, finalNama);
+                            simpanDanLanjutkan(prefs, true);
                         })
                         .setNegativeButton("Batal", null)
                         .show();
             } else {
-                simpanDanLanjutkan(prefs, false, finalNama);
+                simpanDanLanjutkan(prefs, false);
             }
         });
     }
 
-    private void simpanDanLanjutkan(SharedPreferences prefs, boolean isReset, String namaPengguna) {
+    private void simpanDanLanjutkan(SharedPreferences prefs, boolean isReset) {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(KEY_CANON, selectedCanon);
-        editor.putString(KEY_USER_NAME, namaPengguna);
         editor.putBoolean(KEY_FIRST_TIME, true);
 
         if (isReset) {
@@ -119,9 +104,8 @@ public class SelectCanonActivity extends AppCompatActivity {
                 user.setLastReadDate("");
                 user.getHistoryList().clear();
             }
-            if (namaPengguna != null && !namaPengguna.isEmpty() && !"Pembaca".equals(namaPengguna)) {
-                user.setUsername(namaPengguna);
-            }
+            editor.putString(KEY_USER_NAME, user.getUsername());
+            editor.apply();
             helper.updateActiveUser(user);
         }
 
