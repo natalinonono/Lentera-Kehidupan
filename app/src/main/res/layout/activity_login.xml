@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_slate"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!-- Header / Judul Aplikasi -->
+    <TextView
+        android:id="@+id/tvLoginAppTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:text="LENTERA KEHIDUPAN"
+        android:textColor="@color/primary_gray"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="sans-serif"
+        android:text="Aplikasi Perjalanan Membaca Alkitab"
+        android:textColor="@color/text_muted"
+        android:textSize="13sp" />
+
+    <!-- Card Login / Pilihan Akun (Flat Kaku) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@color/surface_white"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:text="MASUK / PILIH PENGGUNA"
+            android:textColor="@color/primary_gray"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="sans-serif"
+            android:text="Pilih akun yang sudah ada atau daftarkan profil baru"
+            android:textColor="@color/text_muted"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="@color/border_light" />
+
+        <!-- Daftar Akun Terdaftar -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="260dp">
+
+            <LinearLayout
+                android:id="@+id/llLoginUserContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/tvEmptyUserWarning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="Belum ada pengguna. Silakan buat akun baru di bawah."
+            android:textColor="@color/text_muted"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <!-- Tombol Tambah / Buat Akun Baru -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLoginDaftarBaru"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/primary_gray"
+            android:fontFamily="sans-serif-condensed"
+            android:text="+ BUAT AKUN PENGGUNA BARU"
+            android:textColor="@color/surface_white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:cornerRadius="0dp"
+            app:elevation="0dp" />
+
+    </LinearLayout>
+
+</LinearLayout>
